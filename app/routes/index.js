@@ -126,8 +126,17 @@ router.post('/smartTips', function(req, res, next) {
 	}
 });
 
-router.post('/similarArticles', function(req, res, next) {
-//	if (req.body.input === 'content') {
+router.post('/similarArticlesSentiment', function(req, res, next) {
+	if (req.body.text.length > 300) {
+		 var r = Math.floor(Math.random() * 2) + 1
+         var result;
+         if(r===1) {
+			result = {"type":"tip3-positive","heading":"Positive Sentiment &#x1F603;", "description":"Similar articles have had positive user comments."}
+		} else if(r===2)
+			result = {"type":"tip3-negative","heading":" Negative Sentiment &#x1F615;", "description":"Uh oh.  Similar articles have had poor user feedback!"}
+
+		res.status(200).send({success:true, results:result});
+	}
 //		result = [];
 //		var similar_articles=[]
 //		id = 0;
@@ -143,15 +152,6 @@ router.post('/similarArticles', function(req, res, next) {
 //			//now we have the confidence, now we call the comments on this
 //			console.log('id is'+id)
 //			}
-
-         r = Math.floor(Math.random() * 3) + 1
-         if(r==1)
-			result.push({"type":"tip3","heading":"Positive Sentiment", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing."})
-         if(r==2)
-			result.push({"type":"tip3","heading":" Negative Sentiment", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing."})
-         if(r==3)
-			result.push({"type":"tip3","heading":"Neutral Phrase", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing."})
-
-			})
+	})
 
 module.exports = router;

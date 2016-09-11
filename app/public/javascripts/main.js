@@ -90,10 +90,17 @@ $(document).ready(function() {
                     }
                 });
 
-                $.post("similarArticles", {"input":"content", "text":text},
-                                  function(data) {
-                             $('#similarArticles').text(data.result);
-                                });
+                $.post("similarArticlesSentiment", {"input":"content", "text":text}, function(data) {
+                  if (data.success) {
+                    if (data.results["type"] === "tip3-positive") {
+                      $('.smartSentences').append("<div class='ui segment left aligned green'><h5>"+data.results["heading"]+"</h5><p>"+data.results["description"]+"</p<</div>");
+                    } else if (data.results["type"] === "tip3-negative") {
+                      $('.smartSentences').append("<div class='ui segment left aligned red'><h5>"+data.results["heading"]+"</h5><p>"+data.results["description"]+"</p<</div>");
+                    }
+                  } else {
+                    console.error(data);
+                  }
+                });
 
                 }
       });
