@@ -42,7 +42,16 @@ $(document).ready(function() {
                 });
 
 
+                if(text.split(' ').length>750 && text.split(' ').length <850){
+                    $('#wordCount').removeClass();
+                    $('#wordCount').addClass("ui green circular label");
+                }
+                else{
+                    $('#wordCount').removeClass();
+                    $('#wordCount').addClass("ui red circular label");
+                }
                 $('#wordCount').text(text.split(' ').length);
+
 
                 $.get("clarityAnalysis?text="+text, function(data){
                         $('#clarity').text(Math.floor(data.clarity));
