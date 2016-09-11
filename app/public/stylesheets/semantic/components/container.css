@@ -77,7 +77,7 @@
 /* Large Monitor */
 @media only screen and (min-width: 1200px) {
   .ui.container {
-    width: 1127px;
+    width: 1227px;
     margin-left: auto !important;
     margin-right: auto !important;
   }
@@ -145,4 +145,3 @@
 /*******************************
          Site Overrides
 *******************************/
-

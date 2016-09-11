@@ -1,46 +1,40 @@
 extends layout
 
 block content
-  .ui.main.text.container
-    h1.ui.header Start writing great articles
+  .ui.main.container
+    h1.ui.left.aligned.header Publish TechCrunch Article
 
-    .ui.grid
+    .ui.grid.fixed
 
-      .left.aligned.four.wide.column
-        .ui.segments.smartSentences
-          .ui.segment
-            | Reading Time
-            a.ui.green.circular.label(style='float:right', id='readingTime') 0s
-          .ui.segment
-            | Tone
-            a.ui.olive.circular.label(style='float:right') B
-          .ui.segment
-            | Readability
-            a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
-          .ui.segment
-            | Clarity Score
-            a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
-          .ui.segment
-            | Word Count
-            a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
 
-      .left.aligned.twelve.wide.column
+      .left.aligned.thirteen.wide.column
         .ui.segments
           .ui.horizontal.segments
-            .ui.segment
-              .ui.input.fluid.icon
-                input(type='text', placeholder='To', id='recipientEmail')
-                i.icon
-            .ui.segment
-              .ui.input.fluid.icon
-                input(type='text', placeholder='From', id='fromEmail')
-                i.icon
           .ui.segment
             .ui.input.fluid
-              input(type='text', placeholder='Subject', id='subject')
+              input(type='text', placeholder='Title', id='subject')
           .ui.segment.form
             textarea(rows='18', placeholder='Message', id='emailMessage')
-          .right.ui.segment.form
-            button.ui.button Discard
+          .center.aligned.ui.segment.form
             button.ui.right.primary.icon.button(id="sendEmail") Send
               i.right.arrow.icon
+
+
+
+      .right.aligned.three.wide.column
+                .ui.segments.smartSentences
+                  .ui.segment
+                    | Reading Time
+                    a.ui.green.circular.label(style='float:left', id='readingTime') 0s
+                  .ui.segment
+                    | Tone
+                    a.ui.olive.circular.label(style='float:left') B
+                  .ui.segment
+                    | Readability
+                    a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
+                  .ui.segment
+                    | Clarity Score
+                    a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
+                  .ui.segment
+                    | Word Count
+                    a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
