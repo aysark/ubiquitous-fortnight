@@ -13,6 +13,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
-    "reading-time": "^1.1.0"
+    "reading-time": "^1.1.0",
+    "watson-developer-cloud":"2.2.0"
+
   }
 }
