@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var lcs = require('longest-common-subsequence');
+
 
 // HEURISTIC SCORING
 var readingTime = require('reading-time');
@@ -61,6 +64,44 @@ router.get('/toneAnalysis', function(req, res, next) {
                         res.status(200).send({'agreeableness_big5':tone_category['tones'][i]['score']});
             }}
   });
+});
+
+router.post('/smartTips', function(req, res, next) {
+	if (req.body.input === 'content') {
+		result = [];
+
+		// Tip 1: Great Phrase
+		// iterate thru top 10% of articles and find intersecting phrases
+		var highest_viewed_articles = JSON.parse(fs.readFileSync('../playbook/highest_viewed_articles.json', 'utf8'));
+		for (var i=0; i<highest_viewed_articles.length; i++) {
+			// FIX LCS
+			var longest_intersection =  lcs(req.body.text, highest_viewed_articles[i]['content.rendered']);
+			console.log(req.body.text);
+			console.log(highest_viewed_articles[i]['content.rendered']);
+			console.log(longest_intersection);
+			// var longest_intersection = intersections.sort(function (a, b) { return b.length - a.length; })[0];
+			// console.log(longest_intersection);
+			if (longest_intersection.length > 15) {
+				result.push({"type":"Great Phrase!", "description":"The top 10% articles contain similar phrases!", "annotate":longest_intersection})
+				break;
+			}
+		}
+
+		// Tip 2: Poor Phrase
+		// var lowest_viewed_articles = JSON.parse(fs.readFileSync('../playbook/lowest_viewed_articles.json', 'utf8'));
+		// for (var i=0; i<lowest_viewed_articles.length; i++) {
+		// 	intersection = lowest_viewed_articles[i]['content.rendered'].intersection(req.body.text, 15);
+		// 	if (intersection.length > 15) {
+		// 		result.push({"type":"Poor Phrase", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing.", "annotate":intersection})
+		// 		break;
+		// 	}
+		// }
+
+		// TODO: more tips
+		res.status(200).send(result);
+	} else if (req.body.input === 'title') {
+		// TODO
+	}
 });
 
 module.exports = router;

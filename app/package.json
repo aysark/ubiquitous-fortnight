@@ -14,7 +14,8 @@
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "reading-time": "^1.1.0",
-    "watson-developer-cloud":"2.2.0"
-
+    "watson-developer-cloud":"2.2.0",
+    "node-inspector":"0.12.8",
+    "body-parser-json":"1.9.2"
   }
 }
