@@ -5,7 +5,7 @@ $(document).ready(function() {
 
       $('#emailMessage').keyup(function(){
          var text = $('#emailMessage').val();
-         if(oldtext.length+ 10<text.length){
+         if(oldtext.length+ 20<text.length){
 
                 oldtext = text;
                 var readabilityGrade = calculateReadability(text);
@@ -44,12 +44,14 @@ $(document).ready(function() {
 
                 $('#wordCount').text(text.split(' ').length);
 
-                $.get("toneAnalysis?text="+text, function(data){
-
-                        console.log(data.agreeableness_big5)
-                        $('#toneAnalysis').text(Math.floor(data.agreeableness_big5*5));
+                $.get("clarityAnalysis?text="+text, function(data){
+                        $('#clarity').text(Math.floor(data.clarity));
                       });
-                // TODO: the rest of heuristic scores and smart tips
+
+                $.get("toneAnalysis?text="+text, function(data){
+                        $('#toneAnalysis').text(Math.floor(data.agreeableness_big5*10));
+                });
+
                 }
       });
 
