@@ -1,5 +1,5 @@
 body {
-    background-color: #FFFFFF;
+    background-color: #f8f8f8;
   }
   .ui.menu .item img.logo {
     margin-right: 1.5em;
@@ -16,4 +16,11 @@ body {
   }
  .segment-mod {
    cursor: pointer;
+ }
+ .fixed-width {
+     width: 900px;
+     height:300px;
+     min-width: 300px;
+     min-height:200px;
+     border:1px solid #000000;
  }

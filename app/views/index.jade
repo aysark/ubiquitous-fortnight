@@ -5,20 +5,26 @@ block content
     h1.ui.header Start writing great articles
 
     .ui.grid
-      .left.aligned.seven.wide.column
+
+      .left.aligned.four.wide.column
         .ui.segments.smartSentences
           .ui.segment
             | Reading Time
             a.ui.green.circular.label(style='float:right', id='readingTime') 0s
           .ui.segment
-            | Politeness
+            | Tone
             a.ui.olive.circular.label(style='float:right') B
           .ui.segment
             | Readability
             a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
-          .ui.secondary.segment
-            | Smart Sentences
-      .left.aligned.nine.wide.column
+          .ui.segment
+            | Clarity Score
+            a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
+          .ui.segment
+            | Word Count
+            a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
+
+      .left.aligned.twelve.wide.column
         .ui.segments
           .ui.horizontal.segments
             .ui.segment
