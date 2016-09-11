@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-var lcs = require('longest-common-subsequence');
+var lcs = require('longest-common-substring');
 
 
 // HEURISTIC SCORING
@@ -75,9 +75,10 @@ router.post('/smartTips', function(req, res, next) {
 		var highest_viewed_articles = JSON.parse(fs.readFileSync('../playbook/highest_viewed_articles.json', 'utf8'));
 		for (var i=0; i<highest_viewed_articles.length; i++) {
 			// FIX LCS
-			var longest_intersection =  lcs(req.body.text, highest_viewed_articles[i]['content.rendered']);
+			var longest_intersection =  lcs(req.body.text.split(' '), highest_viewed_articles[i]['content.rendered'].split(' '));
 			console.log(req.body.text);
-			console.log(highest_viewed_articles[i]['content.rendered']);
+//			console.log(highest_viewed_articles[i]['content.rendered']);
+			console.log('THIS IS THE OUTPUT')
 			console.log(longest_intersection);
 			// var longest_intersection = intersections.sort(function (a, b) { return b.length - a.length; })[0];
 			// console.log(longest_intersection);
@@ -103,5 +104,20 @@ router.post('/smartTips', function(req, res, next) {
 		// TODO
 	}
 });
+
+//router.post('/similarArticles', function(req, res, next) {
+//	if (req.body.input === 'content') {
+//		result = [];
+//
+//		var similar_articles=[]
+//		var articles = JSON.parse(fs.readFileSync('../playbook/aaa.json', 'utf8'));
+//		for (var i=0; i<articles['data'].length; i++) {
+//			// FIX LCS
+//			var string_match =  jc.index(req.body.text, articles['data'][i]['content']);
+//			if(string_match>0.6){
+//			    similar_articles.append({'title':})
+//			}
+//
+//			}}})
 
 module.exports = router;
