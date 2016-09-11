@@ -42,7 +42,7 @@ $(document).ready(function() {
                 });
 
 
-                if(text.split(' ').length>750 && text.split(' ').length <850){
+                if(text.split(' ').length>350 && text.split(' ').length <500){
                     $('#wordCount').removeClass();
                     $('#wordCount').addClass("ui green circular label");
                 }
