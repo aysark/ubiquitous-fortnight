@@ -9,7 +9,6 @@ var jc = require('jaccard');
 var readingTime = require('reading-time');
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
-var sentiment = {1: 'anger',2: 'disgust',3: 'fear',4: 'joy', 5:'sadness' }
 
 var tone_analyzer = new ToneAnalyzerV3({
   username: '67bea8a7-3bfb-49d8-bae5-aa46e5e050f7',
@@ -128,26 +127,31 @@ router.post('/smartTips', function(req, res, next) {
 });
 
 router.post('/similarArticles', function(req, res, next) {
-	if (req.body.input === 'content') {
-		result = [];
-		var similar_articles=[]
-		id = 0;
-		confidence = 0;
-		var articles = JSON.parse(fs.readFileSync('../playbook/aaa.txt', 'utf8'));
-		for (var i=0; i<articles['data'].length; i++) {
-			var string_match =  jc.index(req.body.text.split(' '), articles['data'][i]['content']['rendered'].split(' '));
-			if(string_match>confidence){
-			    id=articles['data'][i]['id']
-			    confidence=string_match
-			}
-			}
-			//now we have the confidence, now we call the comments on this
-			console.log('id is'+id)
-			}
+//	if (req.body.input === 'content') {
+//		result = [];
+//		var similar_articles=[]
+//		id = 0;
+//		confidence = 0;
+//		var articles = JSON.parse(fs.readFileSync('../playbook/aaa.txt', 'utf8'));
+//		for (var i=0; i<articles['data'].length; i++) {
+//			var string_match =  jc.index(req.body.text.split(' '), articles['data'][i]['content']['rendered'].split(' '));
+//			if(string_match>confidence){
+//			    id=articles['data'][i]['id']
+//			    confidence=string_match
+//			}
+//			}
+//			//now we have the confidence, now we call the comments on this
+//			console.log('id is'+id)
+//			}
 
-         r = Math.floor(Math.random() * 4) + 1
+         r = Math.floor(Math.random() * 3) + 1
+         if(r==1)
+			result.push({"type":"tip3","heading":"Positive Sentiment", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing."})
+         if(r==2)
+			result.push({"type":"tip3","heading":" Negative Sentiment", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing."})
+         if(r==3)
+			result.push({"type":"tip3","heading":"Neutral Phrase", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing."})
 
-		    res.status(200).send({'result':sentiment[r]});
 			})
 
 module.exports = router;
