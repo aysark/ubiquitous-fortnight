@@ -4,6 +4,20 @@ $(document).ready(function() {
 
 
       $('#emailMessage').keyup(function(){
+
+
+      $('#emailMessage').highlightTextarea({
+        words: [{
+          color: '#ADF0FF',
+          words: ['hello', 'this']
+        }, {
+          color: '#FFFF00',
+          words: ['done']
+        }]
+      });
+
+
+
          var text = $('#emailMessage').val();
          if(oldtext.length+ 20<text.length){
 
