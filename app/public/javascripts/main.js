@@ -1,5 +1,47 @@
 $(document).ready(function() {
 
+  var originalArticleText = "";
+
+  $('#emailMessage').keyup(function(){
+    var text = $('#emailMessage').val();
+
+    var readabilityGrade = calculateReadability(text);
+    $('#readabilityGrade').removeClass();
+    if (readabilityGrade <= 6) {
+      $('#readabilityGrade').addClass("ui green circular label");
+    } else if (readabilityGrade > 6 && readabilityGrade <= 9) {
+      $('#readabilityGrade').addClass("ui olive circular label");
+    } else if (readabilityGrade > 9 && readabilityGrade <= 11) {
+      $('#readabilityGrade').addClass("ui yellow circular label");
+    } else if (readabilityGrade > 11 && readabilityGrade <= 13) {
+      $('#readabilityGrade').addClass("ui orange circular label");
+    } else {
+      $('#readabilityGrade').addClass("ui red circular label");
+    }
+    $('#readabilityGrade').text(readabilityGrade);
+
+    $.get("readingTime?text="+text, function(data){
+      var seconds = Math.round(data.minutes * 60);
+
+      $('#readingTime').removeClass();
+      if (seconds <= 120) {
+        $('#readingTime').addClass("ui green circular label");
+      } else if (seconds > 120 && seconds <= 240) {
+        $('#readingTime').addClass("ui olive circular label");
+      } else if (seconds > 240 && seconds <= 300) {
+        $('#readingTime').addClass("ui yellow circular label");
+      } else if (seconds > 300 && seconds <= 420) {
+        $('#readingTime').addClass("ui orange circular label");
+      } else {
+        $('#readingTime').addClass("ui red circular label");
+      }
+      $('#readingTime').text(seconds + "s");
+    });
+
+    // TODO: the rest of heuristic scores and smart tips
+  });
+
+
   function calculateReadability(text) {
     var c_over_w = text.replace(/[^A-Z0-9]/gi, "").length / (text.split(' ').length - 1);
     var w_over_s = (text.split(' ').length - 1) / (text.replace(/([.?!])\s*(?=[A-Z0-9])/gi, "$1|").split("|")).length;
