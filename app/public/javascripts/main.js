@@ -65,7 +65,7 @@ $(document).ready(function() {
                 $.post("smartTips", {"input":"content", "text":text},
                   function(data) {
                     if (data.success) {
-                      var color_map = {"tip1":"#ADF0FF", "tip2":"#FFFF00"};
+                      var color_map = {"tip1":"#ADF0FF", "tip2":"#ADF0FF"};
                       
                       var words_a = [];
                       for (var i=0; i<data.results.length; i++) {
@@ -78,6 +78,8 @@ $(document).ready(function() {
                           $('.smartSentences').append("<div class='ui segment left aligned yellow'><h5>"+data.results[i]["heading"]+"</h5><p>"+data.results[i]["description"]+"</p<</div>");
                         }
                       }
+
+                      $('.highlightTextarea-highlighter').empty();
 
                       $('#emailMessage').highlightTextarea({
                           words: words_a
