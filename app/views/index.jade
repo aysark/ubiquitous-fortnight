@@ -11,30 +11,53 @@ block content
         .ui.segments
           .ui.horizontal.segments
           .ui.segment
-            .ui.input.fluid
-              input(type='text', placeholder='Title', id='subject')
+            .transparent.massive.ui.input.fluid.icon
+              input(type='text', placeholder='Title', id='subject', icon='users icon')
           .ui.segment.form
             textarea(rows='18', placeholder='Message', id='emailMessage')
           .center.aligned.ui.segment.form
-            button.ui.right.primary.icon.button(id="sendEmail") Send
-              i.right.arrow.icon
+            button.labeled.ui.massive.green.right.icon.button(id="sendEmail") Publish
+              i.right.send.icon
+
+
+      .three.wide.column
+              .left.aligned
+
+                //| Heuristics
+
+                .ui.horizontal.header.divider
+                      .pie.chart.icon
+                      | Heuristics
 
 
 
-      .right.aligned.three.wide.column
                 .ui.segments.smartSentences
-                  .ui.segment
+                  .ui.segment.right.aligned
                     | Reading Time
                     a.ui.green.circular.label(style='float:left', id='readingTime') 0s
-                  .ui.segment
+                  .ui.segment.right.aligned
                     | Tone
                     a.ui.olive.circular.label(style='float:left') B
-                  .ui.segment
+                  .ui.segment.right.aligned
                     | Readability
                     a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
-                  .ui.segment
+                  .ui.segment.right.aligned
                     | Clarity Score
                     a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
-                  .ui.segment
+                  .ui.segment.right.aligned
                     | Word Count
                     a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
+
+                //| Annotations
+
+                .ui.horizontal.header.divider
+                      | Annotations
+
+                .ui.segment.left.aligned.red
+                      i.left.warning.circle.icon.color.red
+                      | This is an example of annotation text
+
+
+                .ui.segment.left.aligned.purple
+                      i.left.warning.circle.icon.color.purple
+                      | This is an example of annotation text

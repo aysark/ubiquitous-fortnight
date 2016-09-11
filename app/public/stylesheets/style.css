@@ -24,3 +24,15 @@ body {
      min-height:200px;
      border:1px solid #000000;
  }
+
+
+ .landpage-image{
+      height: 55%;
+}
+
+.landpage-image{
+    background-image: url('..bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
