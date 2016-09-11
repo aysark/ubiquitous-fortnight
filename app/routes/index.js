@@ -74,32 +74,52 @@ router.post('/smartTips', function(req, res, next) {
 		// iterate thru top 10% of articles and find intersecting phrases
 		var highest_viewed_articles = JSON.parse(fs.readFileSync('../playbook/highest_viewed_articles.json', 'utf8'));
 		for (var i=0; i<highest_viewed_articles.length; i++) {
-			// FIX LCS
-			var longest_intersection =  lcs(req.body.text.split(' '), highest_viewed_articles[i]['content.rendered'].split(' '));
-			console.log(req.body.text);
-//			console.log(highest_viewed_articles[i]['content.rendered']);
-			console.log('THIS IS THE OUTPUT')
-			console.log(longest_intersection);
-			// var longest_intersection = intersections.sort(function (a, b) { return b.length - a.length; })[0];
-			// console.log(longest_intersection);
-			if (longest_intersection.length > 15) {
-				result.push({"type":"Great Phrase!", "description":"The top 10% articles contain similar phrases!", "annotate":longest_intersection})
+			var input_text_words = req.body.text.split(' ');
+			var longest_intersection =  lcs(input_text_words, highest_viewed_articles[i]['content.rendered'].split(' '));
+			
+			if (longest_intersection.length > 3) {
+				var intersection_str ="";
+				var k = 0;
+				for (var j=longest_intersection.startString1; j<input_text_words.length; j++) {
+					intersection_str += input_text_words[j] + " ";
+					if (k==longest_intersection.length) {
+						break;
+					}
+					k++;
+				}
+				intersection_str = intersection_str.replace(/\n/g, '').trim();
+				console.log("intersection_str found: "+intersection_str);
+				console.info(longest_intersection);
+				result.push({"type":"tip1","heading":"Great Phrase!", "description":"The top 10% articles contain similar phrases!", "annotate":intersection_str})
 				break;
 			}
 		}
 
 		// Tip 2: Poor Phrase
-		// var lowest_viewed_articles = JSON.parse(fs.readFileSync('../playbook/lowest_viewed_articles.json', 'utf8'));
-		// for (var i=0; i<lowest_viewed_articles.length; i++) {
-		// 	intersection = lowest_viewed_articles[i]['content.rendered'].intersection(req.body.text, 15);
-		// 	if (intersection.length > 15) {
-		// 		result.push({"type":"Poor Phrase", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing.", "annotate":intersection})
-		// 		break;
-		// 	}
-		// }
+		var lowest_viewed_articles = JSON.parse(fs.readFileSync('../playbook/lowest_viewed_articles.json', 'utf8'));
+		for (var i=0; i<lowest_viewed_articles.length; i++) {
+			var input_text_words = req.body.text.split(' ');
+			var longest_intersection =  lcs(input_text_words, lowest_viewed_articles[i]['content.rendered'].split(' '));
+
+			if (longest_intersection.length > 3) {
+				var intersection_str ="";
+				var k = 0;
+				for (var j=longest_intersection.startString1; j<input_text_words.length; j++) {
+					intersection_str += input_text_words[j] + " ";
+					if (k==longest_intersection.length) {
+						break;
+					}
+					k++;
+				}
+
+				intersection_str = intersection_str.replace(/\n/g, '').trim();
+				result.push({"type":"tip2","heading":"Poor Phrase", "description":"Low scoring articles contain similar phrases.  Avoid using such phrasing.", "annotate":intersection_str})
+				break;
+			}
+		}
 
 		// TODO: more tips
-		res.status(200).send(result);
+		res.status(200).send({success:true, results:result});
 	} else if (req.body.input === 'title') {
 		// TODO
 	}
