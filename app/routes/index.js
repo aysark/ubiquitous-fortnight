@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var lcs = require('longest-common-substring');
+var jc = require('jaccard');
 
 
 // HEURISTIC SCORING
@@ -55,6 +56,7 @@ router.get('/toneAnalysis', function(req, res, next) {
         console.log(err);
       else
         test_data = JSON.stringify(tone, null, 2)
+        console.log(test_data)
         test_data = JSON.parse(test_data)
         tone_categories = test_data['document_tone']['tone_categories']
         for(j = 0; j < tone_categories.length; j++){
@@ -105,19 +107,24 @@ router.post('/smartTips', function(req, res, next) {
 	}
 });
 
-//router.post('/similarArticles', function(req, res, next) {
-//	if (req.body.input === 'content') {
-//		result = [];
-//
-//		var similar_articles=[]
-//		var articles = JSON.parse(fs.readFileSync('../playbook/aaa.json', 'utf8'));
-//		for (var i=0; i<articles['data'].length; i++) {
-//			// FIX LCS
-//			var string_match =  jc.index(req.body.text, articles['data'][i]['content']);
-//			if(string_match>0.6){
-//			    similar_articles.append({'title':})
-//			}
-//
-//			}}})
+router.post('/similarArticles', function(req, res, next) {
+	if (req.body.input === 'content') {
+		result = [];
+
+		var similar_articles=[]
+		var articles = JSON.parse(fs.readFileSync('../playbook/aaa.txt', 'utf8'));
+		console.log('iiiiiiiii')
+		for (var i=0; i<articles['data'].length; i++) {
+			var string_match =  jc.index(req.body.text.split(' '), articles['data'][i]['content']['rendered'].split(' '));
+			if(string_match>0.6){
+			    similar_articles.append({'title':articles['data'][i]['content'], 'id':articles['data'][i]['id']})
+			}
+
+
+			}}
+			console.log("done")
+
+			res.status(200).send(result);
+			})
 
 module.exports = router;

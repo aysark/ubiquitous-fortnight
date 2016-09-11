@@ -7,13 +7,8 @@ $(document).ready(function() {
 
 
       $('#emailMessage').highlightTextarea({
-        words: [{
-          color: '#ADF0FF',
-          words: ['hello', 'this']
-        }, {
-          color: '#FFFF00',
-          words: ['done']
-        }]
+        words: ['pointed', 'out', 'that', 'in-app', 'revenue'],
+        resizable: true
       });
 
 
@@ -83,6 +78,15 @@ $(document).ready(function() {
                       console.error(data);
                     }
                 });
+
+//                $.post("similarArticles", {"input":"content", "text":text},
+//                                  function(data) {
+//                                    if (data.success) {
+//                                      console.info(data);
+//                                    } else {
+//                                      console.error(data);
+//                                    }
+//                                });
 
                 }
       });
