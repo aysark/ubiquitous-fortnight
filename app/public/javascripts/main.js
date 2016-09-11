@@ -1,58 +1,71 @@
 $(document).ready(function() {
-
+  var oldtext =""
   var originalArticleText = "";
 
-  $('#emailMessage').keyup(function(){
-    var text = $('#emailMessage').val();
 
-    var readabilityGrade = calculateReadability(text);
-    $('#readabilityGrade').removeClass();
-    if (readabilityGrade <= 6) {
-      $('#readabilityGrade').addClass("ui green circular label");
-    } else if (readabilityGrade > 6 && readabilityGrade <= 9) {
-      $('#readabilityGrade').addClass("ui olive circular label");
-    } else if (readabilityGrade > 9 && readabilityGrade <= 11) {
-      $('#readabilityGrade').addClass("ui yellow circular label");
-    } else if (readabilityGrade > 11 && readabilityGrade <= 13) {
-      $('#readabilityGrade').addClass("ui orange circular label");
-    } else {
-      $('#readabilityGrade').addClass("ui red circular label");
-    }
-    $('#readabilityGrade').text(readabilityGrade);
+      $('#emailMessage').keyup(function(){
+         var text = $('#emailMessage').val();
+         if(oldtext.length+ 10<text.length){
 
-    $.get("readingTime?text="+text, function(data){
-      var seconds = Math.round(data.minutes * 60);
+                oldtext = text;
+                var readabilityGrade = calculateReadability(text);
+                $('#readabilityGrade').removeClass();
+                if (readabilityGrade <= 6) {
+                  $('#readabilityGrade').addClass("ui green circular label");
+                } else if (readabilityGrade > 6 && readabilityGrade <= 9) {
+                  $('#readabilityGrade').addClass("ui olive circular label");
+                } else if (readabilityGrade > 9 && readabilityGrade <= 11) {
+                  $('#readabilityGrade').addClass("ui yellow circular label");
+                } else if (readabilityGrade > 11 && readabilityGrade <= 13) {
+                  $('#readabilityGrade').addClass("ui orange circular label");
+                } else {
+                  $('#readabilityGrade').addClass("ui red circular label");
+                }
+                $('#readabilityGrade').text(readabilityGrade);
 
-      $('#readingTime').removeClass();
-      if (seconds <= 120) {
-        $('#readingTime').addClass("ui green circular label");
-      } else if (seconds > 120 && seconds <= 240) {
-        $('#readingTime').addClass("ui olive circular label");
-      } else if (seconds > 240 && seconds <= 300) {
-        $('#readingTime').addClass("ui yellow circular label");
-      } else if (seconds > 300 && seconds <= 420) {
-        $('#readingTime').addClass("ui orange circular label");
-      } else {
-        $('#readingTime').addClass("ui red circular label");
+                $.get("readingTime?text="+text, function(data){
+                  var seconds = Math.round(data.minutes * 60);
+
+                  $('#readingTime').removeClass();
+                  if (seconds <= 120) {
+                    $('#readingTime').addClass("ui green circular label");
+                  } else if (seconds > 120 && seconds <= 240) {
+                    $('#readingTime').addClass("ui olive circular label");
+                  } else if (seconds > 240 && seconds <= 300) {
+                    $('#readingTime').addClass("ui yellow circular label");
+                  } else if (seconds > 300 && seconds <= 420) {
+                    $('#readingTime').addClass("ui orange circular label");
+                  } else {
+                    $('#readingTime').addClass("ui red circular label");
+                  }
+                  $('#readingTime').text(seconds + "s");
+                });
+
+
+                $('#wordCount').text(text.split(' ').length);
+
+                $.get("toneAnalysis?text="+text, function(data){
+
+                        console.log(data.agreeableness_big5)
+                        $('#toneAnalysis').text(Math.floor(data.agreeableness_big5*5));
+                      });
+                // TODO: the rest of heuristic scores and smart tips
+                }
+      });
+
+
+      function calculateReadability(text) {
+        var c_over_w = text.replace(/[^A-Z0-9]/gi, "").length / (text.split(' ').length - 1);
+        var w_over_s = (text.split(' ').length - 1) / (text.replace(/([.?!])\s*(?=[A-Z0-9])/gi, "$1|").split("|")).length;
+        // console.log("c_over_w : "+ c_over_w);
+        // console.log("w_over_s : "+ w_over_s);
+        var r = Math.round(4.71*c_over_w + 0.5*w_over_s - 21.43);
+        if (r < 1) {
+          return 1
+        } else if (r > 14) {
+          return 14;
+        }
+        return r;
       }
-      $('#readingTime').text(seconds + "s");
-    });
 
-    // TODO: the rest of heuristic scores and smart tips
-  });
-
-
-  function calculateReadability(text) {
-    var c_over_w = text.replace(/[^A-Z0-9]/gi, "").length / (text.split(' ').length - 1);
-    var w_over_s = (text.split(' ').length - 1) / (text.replace(/([.?!])\s*(?=[A-Z0-9])/gi, "$1|").split("|")).length;
-    // console.log("c_over_w : "+ c_over_w);
-    // console.log("w_over_s : "+ w_over_s);
-    var r = Math.round(4.71*c_over_w + 0.5*w_over_s - 21.43);
-    if (r < 1) {
-      return 1
-    } else if (r > 14) {
-      return 14;
-    }
-    return r;
-  }
 });
