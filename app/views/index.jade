@@ -16,7 +16,7 @@ block content
           .ui.segment.form
             textarea(rows='18', placeholder='Message', id='emailMessage')
           .center.aligned.ui.segment.form
-            button.labeled.ui.massive.green.right.icon.button(id="sendEmail") Publish
+            button.labeled.ui.large.green.right.icon.button(id="sendEmail") Publish
               i.right.send.icon
 
 
@@ -26,19 +26,15 @@ block content
 
                 //| Heuristics
 
-                .ui.horizontal.header.divider
-                      .pie.chart.icon
-                      | Heuristics
-
-
-
                 .ui.segments.smartSentences
-                  .ui.segment.right.aligned
-                    | Reading Time
-                    a.ui.green.circular.label(style='float:left', id='readingTime') 0s
+
+
                   .ui.segment.right.aligned
                     | Tone
                     a.ui.olive.circular.label(style='float:left') B
+                  .ui.segment.right.aligned
+                    | Reading Time
+                    a.ui.green.circular.label(style='float:left', id='readingTime') 0s
                   .ui.segment.right.aligned
                     | Readability
                     a.ui.green.circular.label(style='float:left', id='readabilityGrade') A
@@ -51,17 +47,5 @@ block content
                   .ui.segment.right.aligned
                     | Agreeableness
                     a.ui.green.circular.label(style='float:left', id='toneAnalysis') 0
-
-                //| Smart Tips
-
-                .ui.horizontal.header.divider
-                      | Smart Tips
-
-                .ui.segment.left.aligned.red
-                      i.left.warning.circle.icon.color.red
-                      | This is an example of annotation text
-
-
-                  .ui.segment.left.aligned.purple
-                        i.left.warning.circle.icon.color.purple
-                        | This is an example of annotation text
+                  .ui.secondary.segment
+                    | Smart Tips

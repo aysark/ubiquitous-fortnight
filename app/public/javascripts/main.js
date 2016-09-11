@@ -5,14 +5,6 @@ $(document).ready(function() {
 
       $('#emailMessage').keyup(function(){
 
-
-      $('#emailMessage').highlightTextarea({
-        words: ['pointed', 'out', 'that', 'in-app', 'revenue'],
-        resizable: true
-      });
-
-
-
          var text = $('#emailMessage').val();
          if(oldtext.length+ 20<text.length){
 
@@ -73,7 +65,25 @@ $(document).ready(function() {
                 $.post("smartTips", {"input":"content", "text":text},
                   function(data) {
                     if (data.success) {
-                      console.info(data);
+                      var color_map = {"tip1":"#ADF0FF", "tip2":"#ADF0FF"};
+                      
+                      var words_a = [];
+                      for (var i=0; i<data.results.length; i++) {
+                        words_a.push({color: color_map[data.results[i]["type"]],
+                            words: [data.results[i]["annotate"]]});
+
+                        if (data.results[i]["type"] === "tip1") {
+                          $('.smartSentences').append("<div class='ui segment left aligned blue'><h5>"+data.results[i]["heading"]+"</h5><p>"+data.results[i]["description"]+"</p<</div>");
+                        } else if (data.results[i]["type"] === "tip2") {
+                          $('.smartSentences').append("<div class='ui segment left aligned yellow'><h5>"+data.results[i]["heading"]+"</h5><p>"+data.results[i]["description"]+"</p<</div>");
+                        }
+                      }
+
+                      $('.highlightTextarea-highlighter').empty();
+
+                      $('#emailMessage').highlightTextarea({
+                          words: words_a
+                      });
                     } else {
                       console.error(data);
                     }
