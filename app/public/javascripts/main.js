@@ -89,14 +89,10 @@ $(document).ready(function() {
                     }
                 });
 
-//                $.post("similarArticles", {"input":"content", "text":text},
-//                                  function(data) {
-//                                    if (data.success) {
-//                                      console.info(data);
-//                                    } else {
-//                                      console.error(data);
-//                                    }
-//                                });
+                $.post("similarArticles", {"input":"content", "text":text},
+                                  function(data) {
+                             $('#similarArticles').text(data.result);
+                                });
 
                 }
       });
