@@ -54,18 +54,18 @@ $(document).ready(function() {
                 $('#wordCount').text(text.split(' ').length);
 
 
-                $.get("clarityAnalysis?text="+text, function(data){
-                        $('#clarity').text(Math.floor(data.clarity));
-                      });
+                // $.get("clarityAnalysis?text="+text, function(data){
+                //         $('#clarity').text(Math.floor(data.clarity));
+                //       });
 
-                $.get("toneAnalysis?text="+text, function(data){
-                        $('#toneAnalysis').text(Math.floor(data.agreeableness_big5*10));
-                });
+                // $.get("toneAnalysis?text="+text, function(data){
+                //         $('#toneAnalysis').text(Math.floor(data.agreeableness_big5*10));
+                // });
 
                 $.post("smartTips", {"input":"content", "text":text},
                   function(data) {
                     if (data.success) {
-                      var color_map = {"tip1":"#ADF0FF", "tip2":"#ADF0FF"};
+                      var color_map = {"tip1":"#ADF0FF", "tip2":"#FFFF00"};
                       
                       var words_a = [];
                       for (var i=0; i<data.results.length; i++) {
@@ -82,7 +82,8 @@ $(document).ready(function() {
                       $('.highlightTextarea-highlighter').empty();
 
                       $('#emailMessage').highlightTextarea({
-                          words: words_a
+                          words: words_a,
+                          caseSensitive: false
                       });
                     } else {
                       console.error(data);

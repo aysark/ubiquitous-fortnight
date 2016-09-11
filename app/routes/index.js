@@ -88,8 +88,6 @@ router.post('/smartTips', function(req, res, next) {
 					k++;
 				}
 				intersection_str = intersection_str.replace(/\n/g, '').trim();
-				console.log("intersection_str found: "+intersection_str);
-				console.info(longest_intersection);
 				result.push({"type":"tip1","heading":"Great Phrase!", "description":"The top 10% articles contain similar phrases!", "annotate":intersection_str})
 				break;
 			}
@@ -117,6 +115,8 @@ router.post('/smartTips', function(req, res, next) {
 				break;
 			}
 		}
+
+		console.log(result);
 
 		// TODO: more tips
 		res.status(200).send({success:true, results:result});
