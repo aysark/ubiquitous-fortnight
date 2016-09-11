@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  .ui.main.text.container
+    h1.ui.header Start writing great articles
+
+    .ui.grid
+      .left.aligned.seven.wide.column
+        .ui.segments.smartSentences
+          .ui.segment
+            | Reading Time
+            a.ui.green.circular.label(style='float:right', id='readingTime') 0s
+          .ui.segment
+            | Politeness
+            a.ui.olive.circular.label(style='float:right') B
+          .ui.segment
+            | Readability
+            a.ui.green.circular.label(style='float:right', id='readabilityGrade') A
+          .ui.secondary.segment
+            | Smart Sentences
+      .left.aligned.nine.wide.column
+        .ui.segments
+          .ui.horizontal.segments
+            .ui.segment
+              .ui.input.fluid.icon
+                input(type='text', placeholder='To', id='recipientEmail')
+                i.icon
+            .ui.segment
+              .ui.input.fluid.icon
+                input(type='text', placeholder='From', id='fromEmail')
+                i.icon
+          .ui.segment
+            .ui.input.fluid
+              input(type='text', placeholder='Subject', id='subject')
+          .ui.segment.form
+            textarea(rows='18', placeholder='Message', id='emailMessage')
+          .right.ui.segment.form
+            button.ui.button Discard
+            button.ui.right.primary.icon.button(id="sendEmail") Send
+              i.right.arrow.icon
