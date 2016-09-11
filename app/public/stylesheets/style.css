@@ -31,8 +31,35 @@ body {
 }
 
 .landpage-image{
-    background-image: url('..bg.png');
+    background-image: url('../../bg.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+}
+
+
+
+
+span.highlight1{
+  background: #ff0000;
+  color: #ffffff;
+}
+
+span.highlight2{
+  background: #cc00cc;
+  color: #ffffff;
+}
+
+span.highlight3{
+  background: #006600;
+  color: #ffffff;
+}
+
+span.highlight4{
+  background: #0000ff;
+  color: #ffffff;
+}
+
+span.highlight5{
+  background: #f1c40f;
 }
